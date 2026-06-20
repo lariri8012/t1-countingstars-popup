@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T1 暗行天文popup Wishlist</title>
+    <title>T1 暗行天文 POPUP 🌌</title>
     <style>
         :root { 
             --theme-blue: #1A365D; 
@@ -108,7 +108,7 @@
 </div>
 
 <script>
-    const CURRENT_VERSION = "202607-POPUP-V10-FINAL-FIX"; 
+    const CURRENT_VERSION = "202607-POPUP-V11-BUGFIX"; 
 
     let rates = { JPY: 0.111, HKD: 0.0057, TWD: 0.0235 };
     let prices = {}; let qtys = {}; let orders = [];
@@ -122,7 +122,7 @@
         { id: 3, name: "STRING POUCH | 束口袋", subCat: "counting_stars", price: 21000 },
         { id: 4, name: "DESK MAT | 桌墊", subCat: "counting_stars", price: 33000 },
         { id: 5, name: "CRYSTAL PAPERWEIGHT | 水晶紙鎮", subCat: "counting_stars", price: 29000 },
-        { id: 6, name: "TICKET BOOK | 票根收集冊", subCat: "counting_stars", price: 25000 },
+        { id: 6, name: "TICKET BOOK | 票根冊", subCat: "counting_stars", price: 25000 },
         { id: 7, name: "RANDOM CHAMPIONSHIP TICKET | 隨機冠軍門票", subCat: "counting_stars", price: 8000 },
         { id: 8, name: "SPINNING METAL KEYCHAIN | 旋轉金屬吊飾", subCat: "counting_stars", price: 25000 },
         { id: 9, name: "BRACELET | 手鍊", subCat: "counting_stars", price: 20000 },
@@ -132,29 +132,29 @@
         { id: 13, name: "FABRIC FOLDING FAN | 布面摺扇", subCat: "counting_stars", price: 19500, drop2: true },
 
         // 2. T1 KLZ
-        { id: 14, name: "SHOOTING STAR PLUSH KEYCHAIN | 流星絨毛吊飾", players: true, subCat: "klz", price: 14000 },
-        { id: 15, name: "RANDOM COMIC STRIP STICKER SET (COUNTING STARS) | 隨機漫畫貼紙(天文版)", subCat: "klz", price: 5000 },
-        { id: 16, name: "METAL BADGE | 金屬徽章", players: true, subCat: "klz", price: 10000, drop2: true },
-        { id: 17, name: "BOUCLE KEYCHAIN | 絨毛線軸吊飾", players: true, subCat: "klz", price: 14000 },
-        { id: 18, name: "RANDOM COMIC STRIP STICKER SET | 隨機漫畫貼紙", subCat: "klz", price: 5000 },
-        { id: 19, name: "DECO STICKER SET | 裝飾貼紙組", subCat: "klz", price: 5000 },
-        { id: 20, name: "PHOTOCARD STAND | 小卡立牌", subCat: "klz", price: 13000 },
+        { id: 14, name: "SHOOTING STAR PLUSH KEYCHAIN | 流星t1klz吊飾", players: true, subCat: "klz", price: 14000 },
+        { id: 15, name: "RANDOM COMIC STRIP STICKER SET (COUNTING STARS) | 隨機t1klz漫畫貼紙(天文版)", subCat: "klz", price: 5000 },
+        { id: 16, name: "METAL BADGE | t1klz金屬徽章", players: true, subCat: "klz", price: 10000, drop2: true },
+        { id: 17, name: "BOUCLE KEYCHAIN | 絨毛t1klz吊飾", players: true, subCat: "klz", price: 14000 },
+        { id: 18, name: "RANDOM COMIC STRIP STICKER SET | 隨機t1klz漫畫貼紙", subCat: "klz", price: 5000 },
+        { id: 19, name: "DECO STICKER SET | t1klz裝飾貼紙組", subCat: "klz", price: 5000 },
+        { id: 20, name: "PHOTOCARD STAND | t1klz小卡立牌", subCat: "klz", price: 13000 },
 
         // 3. GACHA MACHINE
         { id: 21, name: "RANDOM SCREEN CLEANER STICKER | 隨機螢幕清潔貼", subCat: "gacha", price: 4000, excludePC: true },
         { id: 22, name: "RANDOM PUZZLE KEYCHAIN | 隨機拼圖吊飾", subCat: "gacha", price: 4000, excludePC: true },
 
         // 4. SKT x T1
-        { id: 23, name: "ATI PLUSHIE KEYCHAIN | ATI 絨毛娃吊飾", subCat: "skt", price: 20000 },
+        { id: 23, name: "ATI PLUSHIE KEYCHAIN | ATI娃吊飾", subCat: "skt", price: 20000 },
         { id: 24, name: "T1 CREST BADGE SET | T1 隊徽徽章組", subCat: "skt", price: 36000 },
 
         // 5. T1 EVERYWHERE
-        { id: 25, name: "2026 PLUSHIE KEYCHAIN (15CM) | 2026 絨毛娃吊飾", players: true, subCat: "everywhere", price: 26000 },
+        { id: 25, name: "2026 PLUSHIE KEYCHAIN (15CM) | 2026 全世踢娃15cm", players: true, subCat: "everywhere", price: 26000 },
 
         // 6. 2026 HAPPY T1
         { id: 26, name: "HAPPY T1 PACKAGE | Happy T1 套組", subCat: "happy", price: 40000 },
-        { id: 27, name: "T-SHIRT | 紀念 T恤", subCat: "happy", price: 39000 },
-        { id: 28, name: "BALL CAP | 棒球帽", subCat: "happy", price: 38000 },
+        { id: 27, name: "T-SHIRT | Happy T1 T恤", subCat: "happy", price: 39000 },
+        { id: 28, name: "BALL CAP | Happy T1 棒球帽", subCat: "happy", price: 38000 },
         { id: 29, name: "PHOTOCARD SET | 小卡組", subCat: "happy", price: 12000 },
         { id: 30, name: "FILM KEYCHAIN | 底片吊飾", subCat: "happy", price: 8000 },
 
@@ -185,7 +185,7 @@
 
     const menuStructure = [
         {
-            mainTitle: "🌌 POP-UP MERCH (快閃專屬)",
+            mainTitle: "🌌 POP-UP MERCH ",
             subs: [
                 { id: "counting_stars", title: "✨ T1 COUNTING STARS", open: true, type: "pop" },
                 { id: "klz", title: "⭐ T1 KLZ", open: true, type: "pop" },
@@ -194,7 +194,7 @@
             ]
         },
         {
-            mainTitle: "🛍️ OFFICIAL MERCH (常規周邊)",
+            mainTitle: "🛍️ OFFICIAL MERCH ",
             subs: [
                 { id: "everywhere", title: "🌍 T1 EVERYWHERE", open: false, type: "off" },
                 { id: "happy", title: "🎉 2026 HAPPY T1", open: false, type: "off" },
@@ -215,10 +215,10 @@
         calcTotal();
     }
 
-    function saveToStorage() { localStorage.setItem('t1_popup_v10', JSON.stringify({ version: CURRENT_VERSION, prices, qtys, orders })); }
+    function saveToStorage() { localStorage.setItem('t1_popup_v11', JSON.stringify({ version: CURRENT_VERSION, prices, qtys, orders })); }
     
     function loadFromStorage() {
-        const saved = localStorage.getItem('t1_popup_v10');
+        const saved = localStorage.getItem('t1_popup_v11');
         if (saved) { 
             const d = JSON.parse(saved);
             prices = d.prices || {}; qtys = d.qtys || {}; orders = d.orders || [];
@@ -253,7 +253,6 @@
                     
                     let badgesHtml = "";
                     if (item.excludePC) {
-                        // 區分扭蛋機同隊服嘅標籤
                         if (item.subCat === "gacha") {
                             badgesHtml += `<span class="badge-exclude" style="background:#718096;">未知是否計入(暫除外)</span>`;
                         } else {
@@ -289,7 +288,8 @@
                         html += `<div class="player-list">`;
                         players.forEach(p => {
                             const q = qtys[`${item.id}-${p}`] || 0;
-                            html += `<div class="player-row ${q>0?'active':''}" id="prow-${item.id}-${p}"><div style="font-size:13px; font-weight:bold; color:var(--text-main);">${p}</div><div class="qty-box"><button class="qty-btn" onclick="updateQty('${item.id}-${p}', -1, ${item.id})">-</button><input type="number" class="qty-input" id="qty-${item.id}-${p}" value="${q}" readonly><button class="qty-btn" onclick="updateQty('${item.id}', 1, ${item.id})">+</button></div></div>`;
+                    
+                            html += `<div class="player-row ${q>0?'active':''}" id="prow-${item.id}-${p}"><div style="font-size:13px; font-weight:bold; color:var(--text-main);">${p}</div><div class="qty-box"><button class="qty-btn" onclick="updateQty('${item.id}-${p}', -1, ${item.id})">-</button><input type="number" class="qty-input" id="qty-${item.id}-${p}" value="${q}" readonly><button class="qty-btn" onclick="updateQty('${item.id}-${p}', 1, ${item.id})">+</button></div></div>`;
                         });
                         html += `</div>`;
                     }
@@ -374,7 +374,6 @@
                 if(q > 0) { 
                     hasItems = true; 
                     let badge = "";
-                    // 購物車明細裡面嘅標籤都分開咗
                     if (item.excludePC) {
                         badge = item.subCat === "gacha" ? `<span style="color:#718096; font-size:10px; margin-left:4px;">(未知是否計入 暫除外)</span>` : `<span style="color:#E23645; font-size:10px; margin-left:4px;">(不計小卡)</span>`;
                     }
@@ -428,7 +427,7 @@
     function deleteOrder(id) { if(confirm("確定刪除這張訂單嗎？")) { orders = orders.filter(o => o.id !== id); saveToStorage(); renderOrderHistory(); } }
     function forceRefresh() { if(confirm("手動刷新頁面？(當前選擇將保留)")) { window.location.reload(true); } }
     function resetCurrentSelection() { if(confirm("確定清空『目前選購』？")) { Object.keys(qtys).forEach(k => qtys[k] = 0); saveToStorage(); initShop(); renderCart(); } }
-    function resetEverything() { if(confirm("⚠️ 刪除所有儲存數據！確定嗎？")) { localStorage.removeItem('t1_popup_v10'); location.reload(); } }
+    function resetEverything() { if(confirm("⚠️ 刪除所有儲存數據！確定嗎？")) { localStorage.removeItem('t1_popup_v11'); location.reload(); } }
 
     initShop();
 </script>
