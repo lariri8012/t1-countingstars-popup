@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T1 暗行天文popup Wishlist  (高清對位完美版)</title>
+    <title>T1 暗行天文popup Wishlist</title>
     <style>
         :root { 
             --theme-blue: #1A365D; 
@@ -40,18 +40,7 @@
         .item-main-content { display: flex; align-items: flex-start; width: 100%; margin-bottom: 8px; }
         
         /* 圖片.png */
-        .item-img { 
-    width: 75px;          
-    height: auto;         
-    max-height: 110px;    
-    object-fit: contain;  
-    background: #FFFFFF;  
-    border-radius: 6px; 
-    margin-right: 12px; 
-    border: 1px solid #CBD5E0; 
-    flex-shrink: 0; 
-    display: none; 
-}
+        .item-img { width: 75px; height: auto; max-height: 110px; object-fit: contain; background: #FFFFFF; border-radius: 6px; margin-right: 12px; border: 1px solid #CBD5E0; flex-shrink: 0; display: none; }
         
         .item-details { flex-grow: 1; display: flex; flex-direction: column; }
         .item-top { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; }
@@ -83,8 +72,8 @@
 <body>
 
 <div class="header">
-    <h1>晴行天文 🌌 Wishlist</h1>
-    <p>T1 POP-UP STORE · 100%高清圖修復版</p>
+    <h1>暗行天文 🐿️🐯🐈‍⬛🐨🐶 </h1>
+    <p>T1 COUNTING STARS POP-UP</p>
     <button class="btn-refresh" onclick="forceRefresh()">🔄 檢查更新匯率</button>
 </div>
 
@@ -133,8 +122,8 @@
         { id: 3, name: "STRING POUCH | 束口袋", subCat: "counting_stars", price: 21000 },
         { id: 4, name: "DESK MAT | 桌墊", subCat: "counting_stars", price: 33000 },
         { id: 5, name: "CRYSTAL PAPERWEIGHT | 水晶紙鎮", subCat: "counting_stars", price: 29000 },
-        { id: 6, name: "TICKET BOOK | 票根收集冊", subCat: "counting_stars", price: 25000 },
-        { id: 7, name: "RANDOM CHAMPIONSHIP TICKET | 隨機冠軍門票", subCat: "counting_stars", price: 8000 },
+        { id: 6, name: "TICKET BOOK | 票根冊", subCat: "counting_stars", price: 25000 },
+        { id: 7, name: "RANDOM CHAMPIONSHIP TICKET | 隨機門票", subCat: "counting_stars", price: 8000 },
         { id: 8, name: "SPINNING METAL KEYCHAIN | 旋轉金屬吊飾", subCat: "counting_stars", price: 25000 },
         { id: 9, name: "BRACELET | 手鍊", subCat: "counting_stars", price: 20000 },
         { id: 10, name: "FOLDING SCREEN STAND | 屏風立牌", players: true, subCat: "counting_stars", price: 10500 },
@@ -144,27 +133,27 @@
 
         // 2. T1 KLZ
         { id: 14, name: "SHOOTING STAR PLUSH KEYCHAIN | 流星絨毛吊飾", players: true, subCat: "klz", price: 14000 },
-        { id: 15, name: "RANDOM COMIC STRIP STICKER SET (COUNTING STARS) | 隨機漫畫貼紙(天文版)", subCat: "klz", price: 5000 },
+        { id: 15, name: "RANDOM COMIC STRIP STICKER SET (COUNTING STARS) | 隨機t1Klz貼紙(天文版)", subCat: "klz", price: 5000 },
         { id: 16, name: "METAL BADGE | 金屬徽章", players: true, subCat: "klz", price: 10000, drop2: true },
-        { id: 17, name: "BOUCLE KEYCHAIN | 絨毛線軸吊飾", players: true, subCat: "klz", price: 14000 },
-        { id: 18, name: "RANDOM COMIC STRIP STICKER SET | 隨機漫畫貼紙", subCat: "klz", price: 5000 },
-        { id: 19, name: "DECO STICKER SET | 裝飾貼紙組", subCat: "klz", price: 5000 },
+        { id: 17, name: "BOUCLE KEYCHAIN | 絨毛T1Klz吊飾", players: true, subCat: "klz", price: 14000 },
+        { id: 18, name: "RANDOM COMIC STRIP STICKER SET | 隨機T1Klz貼紙", subCat: "klz", price: 5000 },
+        { id: 19, name: "DECO STICKER SET | 貼紙組", subCat: "klz", price: 5000 },
         { id: 20, name: "PHOTOCARD STAND | 小卡立牌", subCat: "klz", price: 13000 },
 
         // 3. GACHA MACHINE
-        { id: 21, name: "RANDOM SCREEN CLEANER STICKER | 隨機螢幕清潔貼", subCat: "gacha", price: 4000, excludePC: true },
+        { id: 21, name: "RANDOM SCREEN CLEANER STICKER | 隨機螢幕清潔貼紙", subCat: "gacha", price: 4000, excludePC: true },
         { id: 22, name: "RANDOM PUZZLE KEYCHAIN | 隨機拼圖吊飾", subCat: "gacha", price: 4000, excludePC: true },
 
         // 4. SKT x T1
-        { id: 23, name: "ATI PLUSHIE KEYCHAIN | ATI 絨毛娃吊飾", subCat: "skt", price: 20000 },
-        { id: 24, name: "T1 CREST BADGE SET | T1 隊徽徽章組", subCat: "skt", price: 36000 },
+        { id: 23, name: "ATI PLUSHIE KEYCHAIN | 阿踢娃吊飾", subCat: "skt", price: 20000 },
+        { id: 24, name: "T1 CREST BADGE SET | T1隊徽徽章組", subCat: "skt", price: 36000 },
 
         // 5. T1 EVERYWHERE
-        { id: 25, name: "2026 PLUSHIE KEYCHAIN (15CM) | 2026 絨毛娃吊飾", players: true, subCat: "everywhere", price: 26000 },
+        { id: 25, name: "2026 PLUSHIE KEYCHAIN (15CM) | 2026 全世踢娃15cm", players: true, subCat: "everywhere", price: 26000 },
 
         // 6. 2026 HAPPY T1
         { id: 26, name: "HAPPY T1 PACKAGE | Happy T1 套組", subCat: "happy", price: 40000 },
-        { id: 27, name: "T-SHIRT | 紀念 T恤", subCat: "happy", price: 39000 },
+        { id: 27, name: "T-SHIRT | T恤", subCat: "happy", price: 39000 },
         { id: 28, name: "BALL CAP | 棒球帽", subCat: "happy", price: 38000 },
         { id: 29, name: "PHOTOCARD SET | 小卡組", subCat: "happy", price: 12000 },
         { id: 30, name: "FILM KEYCHAIN | 底片吊飾", subCat: "happy", price: 8000 },
@@ -180,18 +169,18 @@
         { id: 36, name: "T1 WIN T-SHIRT GREY", subCat: "essential", price: 40000 },
         { id: 37, name: "T1 FIGHTING T-SHIRT", subCat: "essential", price: 40000 },
         { id: 38, name: "T1 ONE AND ONLY T-SHIRT", subCat: "essential", price: 44000 },
-        { id: 39, name: "BACKPACK", subCat: "essential", price: 97000 },
+        { id: 39, name: "BACKPACK | 背包", subCat: "essential", price: 97000 },
 
         // 9. CIRCUS
-        { id: 40, name: "DESK MAT", subCat: "circus", price: 33000 },
-        { id: 41, name: "T-SHIRT WHITE", subCat: "circus", price: 40000 },
-        { id: 42, name: "T-SHIRT CHARCOAL", subCat: "circus", price: 40000 },
-        { id: 43, name: "TICKET KEYCHAIN", players: true, subCat: "circus", price: 9200 },
-        { id: 44, name: "ACRYLIC KEYCHAIN", players: true, subCat: "circus", price: 8200 },
-        { id: 45, name: "PIN BUTTON", players: true, subCat: "circus", price: 4800 },
-        { id: 46, name: "DIORAMA", subCat: "circus", price: 15800 },
-        { id: 47, name: "FABRIC POSTER", subCat: "circus", price: 30000 },
-        { id: 48, name: "KEYCAP SET (5 IN 1)", subCat: "circus", price: 29000 }
+        { id: 40, name: "DESK MAT | 馬戲團 桌墊", subCat: "circus", price: 33000 },
+        { id: 41, name: "T-Shirt (White) | 馬戲團 T恤 (白)", subCat: "circus", price: 40000 },
+        { id: 42, name: "T-Shirt (Charcoal) | 馬戲團 T恤 (炭灰)", subCat: "circus", price: 40000 },
+        { id: 43, name: "Ticket Keyring | 馬戲團 門票吊飾", players: true, subCat: "circus", price: 9200 },
+        { id: 44, name: "Acrylic Keyring | 馬戲團 壓克力吊飾", players: true, subCat: "circus", price: 8200 },
+        { id: 45, name: "PIN BUTTON | 馬戲團 徽章", players: true, subCat: "circus", price: 4800 },
+        { id: 46, name: "DIORAMA | 馬戲團 立牌", subCat: "circus", price: 15800 },
+        { id: 47, name: "FABRIC POSTER | 馬戲團 布海報", subCat: "circus", price: 30000 },
+        { id: 48, name: "KEYCAP SET (5 IN 1) | 馬戲團 鍵帽組", subCat: "circus", price: 29000 }
     ];
 
     const menuStructure = [
