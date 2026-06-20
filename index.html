@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T1 晴行天文 Wishlist 🌌 (高清對位完美版)</title>
+    <style>
+        :root { 
+            --theme-blue: #1A365D; 
+            --theme-gold: #D69E2E; 
+            --bg-color: #F0F4F8; 
+            --card-bg: #FFFFFF;  
+            --text-main: #2D3748; 
+            --text-muted: #718096; 
+            --highlight: #3182CE; 
+            --t1-red: #E23645;
+        }
+        body { background: var(--bg-color); color: var(--text-main); font-family: -apple-system, sans-serif; margin: 0; padding: 15px; padding-bottom: 260px; }
+        
+        .header { text-align: center; padding: 20px 0; border-bottom: 3px solid var(--theme-gold); position: sticky; top: 0; background: var(--theme-blue); z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 0 0 16px 16px; margin: -15px -15px 15px -15px; }
+        .header h1 { margin:0; font-size: 22px; font-weight: 900; letter-spacing: 2px; color: #FFFFFF; }
+        .header p { margin: 5px 0 0 0; font-size: 11px; color: #E2E8F0; font-weight: bold; letter-spacing: 1px; }
+        
+        .btn-refresh { background: #FFFFFF; border: none; border-radius: 15px; padding: 6px 15px; font-size: 11px; font-weight: bold; color: var(--theme-blue); cursor: pointer; margin-top: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .currency-bar { background: var(--card-bg); padding: 12px; border-radius: 12px; font-size: 12px; margin: 15px 0; text-align: center; font-weight: bold; border: 1px solid #E2E8F0; color: var(--theme-blue); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+
+        .main-category-title { font-size: 18px; font-weight: 900; color: var(--theme-blue); margin: 25px 0 10px 0; padding-bottom: 8px; border-bottom: 2px solid var(--theme-gold); display: flex; align-items: center; gap: 8px; }
+
+        .category-section { margin-bottom: 12px; border-radius: 12px; overflow: hidden; border: 1px solid #E2E8F0; background: var(--card-bg); box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+        .category-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; font-size: 14px; font-weight: 900; cursor: pointer; transition: all 0.2s; background: #EBF8FF; color: var(--theme-blue); }
+        .category-header.off-bg { background: #EDF2F7; }
+        .arrow-icon { font-size: 12px; transition: transform 0.3s; color: var(--theme-blue); }
+        .is-collapsed .arrow-icon { transform: rotate(-90deg); }
+        .category-content { padding: 10px; background: var(--card-bg); transition: max-height 0.3s ease-out; }
+        .category-content.collapsed { display: none; }
+
+        .item-row { background: var(--bg-color); padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; flex-direction: column; border: 2px solid transparent; opacity: 0.85; transition: all 0.2s; }
+        .item-row.active { opacity: 1; border: 2px solid var(--highlight); background: #FFFFFF; box-shadow: 0 4px 12px rgba(49, 130, 206, 0.15); }
+        
+        .item-main-content { display: flex; align-items: flex-start; width: 100%; margin-bottom: 8px; }
+        
+        /* 圖片專屬設計 - 支援 .png */
+        .item-img { width: 65px; height: 65px; object-fit: cover; border-radius: 8px; margin-right: 12px; border: 1px solid #CBD5E0; background: #FFF; flex-shrink: 0; display: none; }
+        
+        .item-details { flex-grow: 1; display: flex; flex-direction: column; }
+        .item-top { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; }
+        
+        .price-input { background: var(--bg-color); border: 1px solid #CBD5E0; color: var(--text-main); padding: 6px 8px; border-radius: 8px; width: 80px; font-size: 13px; font-weight: bold; text-align: center; outline: none; margin-bottom: 8px; }
+        .qty-box { display: flex; align-items: center; background: var(--bg-color); border: 1px solid #CBD5E0; border-radius: 20px; padding: 2px; width: 90px; justify-content: space-between; align-self: flex-end; }
+        .qty-btn { background: #FFFFFF; color: var(--text-main); border: 1px solid #CBD5E0; width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .qty-input { background: transparent; border: none; color: var(--text-main); width: 26px; text-align: center; font-size: 14px; font-weight: bold; outline: none; }
+        
+        .player-list { background: #FFFFFF; border-radius: 8px; border: 1px solid #E2E8F0; overflow: hidden; margin-top: 5px; }
+        .player-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid #E2E8F0; }
+        .player-row.active { background: #EBF8FF; }
+        
+        .badge-exclude { background: var(--t1-red); color: white; font-size: 10px; padding: 3px 6px; border-radius: 4px; margin-left: 6px; font-weight: normal; vertical-align: middle; display: inline-block; margin-top: 4px; }
+        .badge-drop2 { background: var(--theme-gold); color: white; font-size: 10px; padding: 3px 6px; border-radius: 4px; margin-left: 6px; font-weight: normal; vertical-align: middle; display: inline-block; margin-top: 4px; }
+
+        .cart-item { background: var(--card-bg); padding: 12px 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center; }
+        .order-history-card { background: #FFFFFF; border: 2px solid var(--theme-gold); padding: 15px; border-radius: 12px; margin-top: 15px; }
+        .order-title { font-weight: 900; color: var(--theme-blue); margin-bottom: 10px; font-size: 14px; cursor: pointer; text-decoration: underline dotted; }
+        .order-item-line { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; border-bottom: 1px dashed #E2E8F0; padding-bottom: 4px; }
+        
+        .footer-total { position: fixed; bottom: 65px; left: 0; right: 0; background: #FFFFFF; border-top: 2px solid var(--theme-gold); padding: 12px 15px; text-align: center; z-index: 999; box-shadow: 0 -4px 15px rgba(0,0,0,0.1); }
+        .tab-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--theme-blue); display: flex; height: 65px; z-index: 1000; }
+        .tab-btn { flex: 1; background: transparent; color: #A0AEC0; border: none; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .tab-btn.active { color: #FFFFFF; background: rgba(255,255,255,0.1); border-top: 3px solid var(--theme-gold); }
+        .summary-box { background: var(--theme-blue); color: white; padding: 20px; border-radius: 16px; margin: 30px 0; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>晴行天文 🌌 Wishlist</h1>
+    <p>T1 POP-UP STORE · 100%高清圖修復版</p>
+    <button class="btn-refresh" onclick="forceRefresh()">🔄 檢查更新匯率</button>
+</div>
+
+<div class="currency-bar" id="rateBar">正在獲取最新匯率...</div>
+
+<div id="shopView">
+    <div id="shopContent"></div>
+    <button onclick="resetCurrentSelection()" style="background:#FFFFFF; color:var(--text-main); border:1px solid #CBD5E0; padding:12px; border-radius:12px; width:100%; margin-top:25px; font-size:13px; font-weight:bold; cursor:pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">🔄 清空當前選擇 (不影響已存單據)</button>
+</div>
+
+<div id="cartView" style="display:none;">
+    <div style="font-size: 18px; font-weight: 900; margin: 20px 0 10px; color: var(--theme-blue);">🛒 購物車明細</div>
+    <div id="cartContent"></div>
+    <button id="saveBtn" onclick="saveOrder()" style="background:var(--theme-blue); color:#FFFFFF; border:none; padding:15px; border-radius:12px; width:100%; font-size:16px; font-weight:bold; margin-top:20px; display:none; box-shadow: 0 4px 10px rgba(26, 54, 93, 0.3);">📦 儲存為新訂單</button>
+    
+    <div style="font-size: 18px; font-weight: 900; margin-top: 40px; margin-bottom: 10px; color: var(--theme-blue);">📜 已儲存分單紀錄 (點擊標題可改名)</div>
+    <div id="orderHistory"></div>
+    <div id="allOrdersSummary"></div>
+    
+    <button onclick="resetEverything()" style="background:#E2E8F0; color:#718096; border:none; padding:10px; border-radius:8px; font-size:12px; margin-top:50px; width:100%;">⚠️ 清空所有數據</button>
+</div>
+
+<div class="footer-total">
+    <div style="font-size:24px; font-weight:900; color:var(--theme-blue);" id="totalDisplay">0 KRW</div>
+    <div style="font-size:11px; color:var(--text-muted); margin-top:2px; font-weight:bold;" id="convDisplay">≈ 0 JPY | 0 HKD | 0 TWD</div>
+    <div id="pcDisplay" style="font-size:12px; margin-top:8px; color:#FFFFFF; background:var(--theme-gold); padding:6px 14px; border-radius:20px; display:inline-block; font-weight:bold;">還差 50,000 KRW 獲得小卡</div>
+</div>
+
+<div class="tab-bar">
+    <button class="tab-btn active" id="tabShop" onclick="switchTab('shop')">🌌 選購周邊</button>
+    <button class="tab-btn" id="tabCart" onclick="switchTab('cart')">🧾 分單小卡計算</button>
+</div>
+
+<script>
+    const CURRENT_VERSION = "202607-POPUP-V9-HD-PERFECT"; 
+
+    let rates = { JPY: 0.111, HKD: 0.0057, TWD: 0.0235 };
+    let prices = {}; let qtys = {}; let orders = [];
+    const players = ["DORAN", "ONER", "FAKER", "PEYZ", "KERIA"];
+    
+    // 【完美 48 件商品清單 - 高清核對版】
+    const items = [
+        // 1. T1 COUNTING STARS
+        { id: 1, name: "HOPAE KEYCHAIN | 號牌吊飾", players: true, subCat: "counting_stars", price: 22000 },
+        { id: 2, name: "T-SHIRT | 晴行天文 T恤", subCat: "counting_stars", price: 49000 },
+        { id: 3, name: "STRING POUCH | 束口袋", subCat: "counting_stars", price: 21000 },
+        { id: 4, name: "DESK MAT | 桌墊", subCat: "counting_stars", price: 33000 },
+        { id: 5, name: "CRYSTAL PAPERWEIGHT | 水晶紙鎮", subCat: "counting_stars", price: 29000 },
+        { id: 6, name: "TICKET BOOK | 票根收集冊", subCat: "counting_stars", price: 25000 },
+        { id: 7, name: "RANDOM CHAMPIONSHIP TICKET | 隨機冠軍門票", subCat: "counting_stars", price: 8000 },
+        { id: 8, name: "SPINNING METAL KEYCHAIN | 旋轉金屬吊飾", subCat: "counting_stars", price: 25000 },
+        { id: 9, name: "BRACELET | 手鍊", subCat: "counting_stars", price: 20000 },
+        { id: 10, name: "FOLDING SCREEN STAND | 屏風立牌", players: true, subCat: "counting_stars", price: 10500 },
+        { id: 11, name: "EMBROIDERED BOOKMARK | 刺繡書籤", players: true, subCat: "counting_stars", price: 12500, drop2: true },
+        { id: 12, name: "NECKLACE | 項鍊", subCat: "counting_stars", price: 30000, drop2: true },
+        { id: 13, name: "FABRIC FOLDING FAN | 布面摺扇", subCat: "counting_stars", price: 19500, drop2: true },
+
+        // 2. T1 KLZ
+        { id: 14, name: "SHOOTING STAR PLUSH KEYCHAIN | 流星絨毛吊飾", players: true, subCat: "klz", price: 14000 },
+        { id: 15, name: "RANDOM COMIC STRIP STICKER SET (COUNTING STARS) | 隨機漫畫貼紙(天文版)", subCat: "klz", price: 5000 },
+        { id: 16, name: "METAL BADGE | 金屬徽章", players: true, subCat: "klz", price: 10000, drop2: true },
+        { id: 17, name: "BOUCLE KEYCHAIN | 絨毛線軸吊飾", players: true, subCat: "klz", price: 14000 },
+        { id: 18, name: "RANDOM COMIC STRIP STICKER SET | 隨機漫畫貼紙", subCat: "klz", price: 5000 },
+        { id: 19, name: "DECO STICKER SET | 裝飾貼紙組", subCat: "klz", price: 5000 },
+        { id: 20, name: "PHOTOCARD STAND | 小卡立牌", subCat: "klz", price: 13000 },
+
+        // 3. GACHA MACHINE
+        { id: 21, name: "RANDOM SCREEN CLEANER STICKER | 隨機螢幕清潔貼", subCat: "gacha", price: 4000, excludePC: true },
+        { id: 22, name: "RANDOM PUZZLE KEYCHAIN | 隨機拼圖吊飾", subCat: "gacha", price: 4000, excludePC: true },
+
+        // 4. SKT x T1
+        { id: 23, name: "ATI PLUSHIE KEYCHAIN | ATI 絨毛娃吊飾", subCat: "skt", price: 20000 },
+        { id: 24, name: "T1 CREST BADGE SET | T1 隊徽徽章組", subCat: "skt", price: 36000 },
+
+        // 5. T1 EVERYWHERE
+        { id: 25, name: "2026 PLUSHIE KEYCHAIN (15CM) | 2026 絨毛娃吊飾", players: true, subCat: "everywhere", price: 26000 },
+
+        // 6. 2026 HAPPY T1
+        { id: 26, name: "HAPPY T1 PACKAGE | Happy T1 套組", subCat: "happy", price: 40000 },
+        { id: 27, name: "T-SHIRT | 紀念 T恤", subCat: "happy", price: 39000 },
+        { id: 28, name: "BALL CAP | 棒球帽", subCat: "happy", price: 38000 },
+        { id: 29, name: "PHOTOCARD SET | 小卡組", subCat: "happy", price: 12000 },
+        { id: 30, name: "FILM KEYCHAIN | 底片吊飾", subCat: "happy", price: 8000 },
+
+        // 7. 2026 INTERNATIONAL UNIFORM
+        { id: 31, name: "INTERNATIONAL UNIFORM JACKET | 國際賽隊服外套", subCat: "uniform", price: 159000, excludePC: true },
+        { id: 32, name: "INTERNATIONAL UNIFORM JERSEY | 國際賽隊服", players: true, subCat: "uniform", price: 129000, excludePC: true },
+
+        // 8. T1 ESSENTIAL
+        { id: 33, name: "TOGETHER GRAPHIC T-SHIRT", subCat: "essential", price: 40000 },
+        { id: 34, name: "TOGETHER T-SHIRT GREY", subCat: "essential", price: 40000 },
+        { id: 35, name: "UNITED IN T1 T-SHIRT GREY", subCat: "essential", price: 40000 },
+        { id: 36, name: "T1 WIN T-SHIRT GREY", subCat: "essential", price: 40000 },
+        { id: 37, name: "T1 FIGHTING T-SHIRT", subCat: "essential", price: 40000 },
+        { id: 38, name: "T1 ONE AND ONLY T-SHIRT", subCat: "essential", price: 44000 },
+        { id: 39, name: "BACKPACK", subCat: "essential", price: 97000 },
+
+        // 9. CIRCUS
+        { id: 40, name: "DESK MAT", subCat: "circus", price: 33000 },
+        { id: 41, name: "T-SHIRT WHITE", subCat: "circus", price: 40000 },
+        { id: 42, name: "T-SHIRT CHARCOAL", subCat: "circus", price: 40000 },
+        { id: 43, name: "TICKET KEYCHAIN", players: true, subCat: "circus", price: 9200 },
+        { id: 44, name: "ACRYLIC KEYCHAIN", players: true, subCat: "circus", price: 8200 },
+        { id: 45, name: "PIN BUTTON", players: true, subCat: "circus", price: 4800 },
+        { id: 46, name: "DIORAMA", subCat: "circus", price: 15800 },
+        { id: 47, name: "FABRIC POSTER", subCat: "circus", price: 30000 },
+        { id: 48, name: "KEYCAP SET (5 IN 1)", subCat: "circus", price: 29000 }
+    ];
+
+    const menuStructure = [
+        {
+            mainTitle: "🌌 POP-UP MERCH (快閃專屬)",
+            subs: [
+                { id: "counting_stars", title: "✨ T1 COUNTING STARS", open: true, type: "pop" },
+                { id: "klz", title: "⭐ T1 KLZ", open: true, type: "pop" },
+                { id: "gacha", title: "🎰 GACHA MACHINE (扭蛋機)", open: false, type: "pop" },
+                { id: "skt", title: "🏕️ SKT x T1", open: false, type: "pop" }
+            ]
+        },
+        {
+            mainTitle: "🛍️ OFFICIAL MERCH (常規周邊)",
+            subs: [
+                { id: "everywhere", title: "🌍 T1 EVERYWHERE", open: false, type: "off" },
+                { id: "happy", title: "🎉 2026 HAPPY T1", open: false, type: "off" },
+                { id: "uniform", title: "👕 2026 INT. UNIFORM", open: false, type: "off" },
+                { id: "essential", title: "👕 T1 ESSENTIAL", open: false, type: "off" },
+                { id: "circus", title: "🎪 ANIMAL FRIENDS CIRCUS", open: false, type: "off" }
+            ]
+        }
+    ];
+
+    async function getRates() {
+        try {
+            const r = await fetch('https://open.er-api.com/v6/latest/KRW');
+            const d = await r.json();
+            rates = { JPY: d.rates.JPY, HKD: d.rates.HKD, TWD: d.rates.TWD };
+            document.getElementById('rateBar').innerText = `1k KRW ≈ ${Math.round(rates.JPY*1000)} JPY | ${Math.round(rates.HKD*1000,1)} HKD | ${Math.round(rates.TWD*1000,1)} TWD`;
+        } catch(e) { document.getElementById('rateBar').innerText = "匯率獲取失敗，使用預設值"; }
+        calcTotal();
+    }
+
+    function saveToStorage() { localStorage.setItem('t1_popup_v9', JSON.stringify({ version: CURRENT_VERSION, prices, qtys, orders })); }
+    
+    function loadFromStorage() {
+        const saved = localStorage.getItem('t1_popup_v9');
+        if (saved) { 
+            const d = JSON.parse(saved);
+            prices = d.prices || {}; qtys = d.qtys || {}; orders = d.orders || [];
+            if (d.version !== CURRENT_VERSION) {
+                items.forEach(i => { if(i.price) prices[i.id] = i.price; });
+                saveToStorage(); 
+            }
+        } else {
+            items.forEach(i => { if(i.price) prices[i.id] = i.price; });
+        }
+    }
+
+    function initShop() {
+        loadFromStorage();
+        const container = document.getElementById('shopContent');
+        let html = "";
+        
+        menuStructure.forEach(main => {
+            html += `<div class="main-category-title">${main.mainTitle}</div>`;
+            main.subs.forEach(sub => {
+                let headerClass = sub.type === "off" ? "off-bg" : "";
+                html += `<div class="category-section">
+                            <div class="category-header ${headerClass} ${sub.open ? '' : 'is-collapsed'}" onclick="toggleCategory('${sub.id}', this)">
+                                <span>${sub.title}</span>
+                                <span class="arrow-icon">▼</span>
+                            </div>
+                            <div id="content-${sub.id}" class="category-content ${sub.open ? '' : 'collapsed'}">`;
+                
+                items.filter(i => i.subCat === sub.id).forEach(item => {
+                    const currentP = prices[item.id] || "";
+                    let rowActive = item.players ? players.some(p => qtys[`${item.id}-${p}`] > 0) : (qtys[item.id] > 0);
+                    
+                    let badgesHtml = "";
+                    if (item.excludePC) badgesHtml += `<span class="badge-exclude">不計小卡</span>`;
+                    if (item.drop2) badgesHtml += `<span class="badge-drop2">📌 7/16 第二彈</span>`;
+
+                    html += `<div class="item-row ${rowActive?'active':''}" id="row-${item.id}">
+                                <div class="item-main-content">
+                                    <img src="img/${item.id}.png" class="item-img" alt="${item.name}" onload="this.style.display='block'" onerror="this.style.display='none'">
+                                    <div class="item-details">
+                                        <div class="item-top">
+                                            <div>
+                                                <div style="font-size:10px; font-weight:900; color:var(--text-muted);">#${item.id.toString().padStart(2,'0')}</div>
+                                                <div style="font-size:14px; font-weight:bold; color:var(--text-main); line-height:1.4; margin-top:2px;">${item.name}</div>
+                                                <div>${badgesHtml}</div>
+                                            </div>
+                                        </div>
+                                        <div style="display:flex; justify-content: space-between; align-items: flex-end; margin-top: 8px;">
+                                            <input type="number" class="price-input" id="price-${item.id}" value="${currentP}" placeholder="₩" oninput="updatePrice(${item.id}, this.value)">`;
+                    if(!item.players) {
+                        const q = qtys[item.id] || 0;
+                        html += `<div class="qty-box"><button class="qty-btn" onclick="updateQty('${item.id}', -1, ${item.id})">-</button><input type="number" class="qty-input" id="qty-${item.id}" value="${q}" readonly><button class="qty-btn" onclick="updateQty('${item.id}', 1, ${item.id})">+</button></div>`;
+                    } else {
+                        html += `<div></div>`;
+                    }
+                    html += `       </div>
+                                    </div>
+                                </div>`;
+                                
+                    if(item.players) {
+                        html += `<div class="player-list">`;
+                        players.forEach(p => {
+                            const q = qtys[`${item.id}-${p}`] || 0;
+                            html += `<div class="player-row ${q>0?'active':''}" id="prow-${item.id}-${p}"><div style="font-size:13px; font-weight:bold; color:var(--text-main);">${p}</div><div class="qty-box"><button class="qty-btn" onclick="updateQty('${item.id}-${p}', -1, ${item.id})">-</button><input type="number" class="qty-input" id="qty-${item.id}-${p}" value="${q}" readonly><button class="qty-btn" onclick="updateQty('${item.id}-${p}', 1, ${item.id})">+</button></div></div>`;
+                        });
+                        html += `</div>`;
+                    }
+                    html += `</div>`;
+                });
+                html += `</div></div>`;
+            });
+        });
+        
+        container.innerHTML = html;
+        getRates();
+    }
+
+    function toggleCategory(key, el) {
+        const content = document.getElementById(`content-${key}`);
+        const collapsed = content.classList.toggle('collapsed');
+        el.classList.toggle('is-collapsed', collapsed);
+    }
+
+    function updatePrice(id, val) { prices[id] = parseInt(val) || 0; saveToStorage(); calcTotal(); renderCart(); }
+    function updateQty(key, delta, parentId) {
+        qtys[key] = Math.max(0, (qtys[key] || 0) + delta);
+        document.getElementById(`qty-${key}`).value = qtys[key];
+        const prow = document.getElementById(`prow-${key}`); if(prow) qtys[key] > 0 ? prow.classList.add('active') : prow.classList.remove('active');
+        const item = items.find(i => i.id === parentId);
+        let anyActive = item.players ? players.some(p => qtys[`${parentId}-${p}`] > 0) : qtys[parentId] > 0;
+        document.getElementById(`row-${parentId}`).classList.toggle('active', anyActive);
+        saveToStorage(); calcTotal(); renderCart();
+    }
+
+    function calcTotal() {
+        let total = 0; let pcEligibleTotal = 0;
+        items.forEach(item => {
+            const p = prices[item.id] || 0;
+            let itemTotal = 0;
+            if (item.players) players.forEach(player => itemTotal += p * (qtys[`${item.id}-${player}`] || 0));
+            else itemTotal += p * (qtys[item.id] || 0);
+            
+            total += itemTotal;
+            if (!item.excludePC) pcEligibleTotal += itemTotal;
+        });
+
+        document.getElementById('totalDisplay').innerText = total.toLocaleString() + ' KRW';
+        document.getElementById('convDisplay').innerText = `≈ ${Math.round(total*rates.JPY).toLocaleString()} JPY | ${Math.round(total*rates.HKD).toLocaleString()} HKD | ${Math.round(total*rates.TWD).toLocaleString()} TWD`;
+        
+        const count = Math.floor(pcEligibleTotal / 50000);
+        const remainder = pcEligibleTotal % 50000;
+        const shortOfNext = 50000 - remainder;
+
+        let pcText = ""; let pcBgColor = "#E2E8F0"; let pcTextColor = "#2D3748";
+        if (count >= 5) {
+            let sets = Math.floor(count / 5); let extra = count % 5;
+            pcText = `✨ 可獲 ${sets} 套完整小卡 + ${extra} 張隨機 (差 ${shortOfNext.toLocaleString()} 多一張)`;
+            pcBgColor = "#D69E2E"; pcTextColor = "#FFFFFF";
+        } else if (count > 0) {
+            let shortOfSet = 250000 - pcEligibleTotal;
+            pcText = `✨ 可獲 ${count} 張隨機小卡 (差 ${shortOfSet.toLocaleString()} 湊齊一套)`;
+            pcBgColor = "#3182CE"; pcTextColor = "#FFFFFF";
+        } else {
+            pcText = `還差 ${(50000 - pcEligibleTotal).toLocaleString()} KRW 獲得小卡 (隊服/扭蛋不計入)`;
+        }
+
+        document.getElementById('pcDisplay').innerText = pcText;
+        document.getElementById('pcDisplay').style.background = pcBgColor;
+        document.getElementById('pcDisplay').style.color = pcTextColor;
+        return { total, count, pcEligibleTotal };
+    }
+
+    function switchTab(tab) {
+        document.getElementById('shopView').style.display = tab === 'shop' ? 'block' : 'none';
+        document.getElementById('cartView').style.display = tab === 'cart' ? 'block' : 'none';
+        document.getElementById('tabShop').classList.toggle('active', tab === 'shop');
+        document.getElementById('tabCart').classList.toggle('active', tab === 'cart');
+        if(tab === 'cart') { renderCart(); renderOrderHistory(); window.scrollTo(0,0); }
+    }
+
+    function renderCart() {
+        const div = document.getElementById('cartContent'); let html = ""; let hasItems = false;
+        items.forEach(item => {
+            const p = prices[item.id] || 0;
+            const process = (name, q) => { 
+                if(q > 0) { 
+                    hasItems = true; 
+                    let badge = item.excludePC ? `<span style="color:#E23645; font-size:10px; margin-left:4px;">(不計小卡)</span>` : ``;
+                    let drop2 = item.drop2 ? `<span style="color:#D69E2E; font-size:10px; margin-left:4px;">[7/16 號起]</span>` : ``;
+                    html += `<div class="cart-item"><div><div style="font-size:13px; font-weight:bold; color:var(--theme-blue);">${name}${badge}${drop2}</div><div style="font-size:11px; color:var(--text-muted);">₩${p.toLocaleString()} × ${q}</div></div><div style="font-weight:900; color:var(--highlight);">${(p*q).toLocaleString()}</div></div>`; 
+                } 
+            };
+            if (item.players) players.forEach(pl => process(`${item.name} [${pl}]`, qtys[`${item.id}-${pl}`]));
+            else process(item.name, qtys[item.id]);
+        });
+        div.innerHTML = hasItems ? html : `<div style="text-align:center; padding:30px; color:var(--text-muted);">購物車空空如也 🌠</div>`;
+        document.getElementById('saveBtn').style.display = hasItems ? 'block' : 'none';
+    }
+
+    function saveOrder() {
+        const { total, count, pcEligibleTotal } = calcTotal(); let orderItems = [];
+        items.forEach(item => {
+            const p = prices[item.id] || 0;
+            const processPush = (n, q) => { 
+                if(q>0) {
+                    let badge = item.excludePC ? " ❌(不計小卡)" : "";
+                    orderItems.push(`${n} (₩${p.toLocaleString()}) × ${q}${badge}`);
+                }
+            };
+            if (item.players) players.forEach(pl => processPush(`${item.name} [${pl}]`, qtys[`${item.id}-${pl}`]));
+            else processPush(item.name, qtys[item.id]);
+        });
+        orders.push({ id: Date.now(), name: `訂單 ${orders.length + 1}`, total, count, pcEligibleTotal, items: orderItems });
+        Object.keys(qtys).forEach(k => qtys[k] = 0);
+        saveToStorage(); initShop(); renderCart(); renderOrderHistory();
+        alert("✅ 訂單已儲存！");
+    }
+
+    function renderOrderHistory() {
+        const div = document.getElementById('orderHistory'); if(orders.length === 0) { div.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:12px; padding:20px;">暫無紀錄</div>`; document.getElementById('allOrdersSummary').innerHTML = ""; return; }
+        let html = ""; let gTotal = 0; let gCount = 0;
+        orders.forEach(o => {
+            gTotal += o.total; gCount += o.count;
+            html += `<div class="order-history-card"><div class="order-title" onclick="renameOrder(${o.id})">📦 ${o.name} <span style="font-size:10px; font-weight:normal; color:#718096;">(點擊改名)</span></div><div style="font-size:12px; color:var(--theme-blue); font-weight:bold; margin-bottom:10px;">總額 ${o.total.toLocaleString()} KRW | 小卡額 ${(o.pcEligibleTotal||0).toLocaleString()} KRW | 獲 ${o.count} 張小卡</div>`;
+            o.items.forEach(line => html += `<div class="order-item-line">${line}</div>`);
+            html += `<button onclick="deleteOrder(${o.id})" style="background:none; border:none; color:#A0AEC0; font-size:11px; margin-top:10px; cursor:pointer;">[ 🗑️ 刪除此單 ]</button></div>`;
+        });
+        div.innerHTML = html;
+        document.getElementById('allOrdersSummary').innerHTML = `<div class="summary-box"><div style="font-size:12px; opacity:0.8;">所有訂單總計匯總</div><div style="font-size:24px; font-weight:900; margin:8px 0; color:#FFFFFF;">₩ ${gTotal.toLocaleString()}</div><div style="font-size:14px; color:#E2E8F0; margin-bottom:10px;">≈ ${Math.round(gTotal*rates.JPY).toLocaleString()} JPY | ${Math.round(gTotal*rates.HKD).toLocaleString()} HKD | ${Math.round(gTotal*rates.TWD).toLocaleString()} TWD</div><div style="font-size:16px; font-weight:bold; color:var(--theme-gold);">✨ 共可獲得 ${gCount} 張小卡</div></div>`;
+    }
+
+    function renameOrder(id) { const o = orders.find(o => o.id === id); const newName = prompt("請輸入訂單名稱：", o.name); if (newName) { o.name = newName; saveToStorage(); renderOrderHistory(); } }
+    function deleteOrder(id) { if(confirm("確定刪除這張訂單嗎？")) { orders = orders.filter(o => o.id !== id); saveToStorage(); renderOrderHistory(); } }
+    function forceRefresh() { if(confirm("手動刷新頁面？(當前選擇將保留)")) { window.location.reload(true); } }
+    function resetCurrentSelection() { if(confirm("確定清空『目前選購』？")) { Object.keys(qtys).forEach(k => qtys[k] = 0); saveToStorage(); initShop(); renderCart(); } }
+    function resetEverything() { if(confirm("⚠️ 刪除所有儲存數據！確定嗎？")) { localStorage.removeItem('t1_popup_v9'); location.reload(); } }
+
+    initShop();
+</script>
+</body>
+</html>
